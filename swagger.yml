@@ -1,0 +1,200 @@
+swagger: "2.0"
+info:
+  description: API для работы с товарами и категориями товаров некоторого магазина для панели администратора магазина
+  version: "1.0.0"
+  title: Товары API
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+# Paths supported by the server application
+paths:
+  /products/{product_id}:
+    get:
+      tags:
+        - Products
+      summary: Получение товара по его идентификатору
+      description: Получение товара по его идентификатору
+      parameters:
+        - name: product_id
+          in: path
+          description: Идентификатор товара
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Товар успешно найден
+          schema:
+            properties:
+              id:
+                type: integer
+              category_id:
+                type: integer
+              name:
+                type: string
+              description:
+                type: string
+        404:
+          description: Необходимый товар не найден
+
+    put:
+      tags:
+        - Products
+      summary: Изменение информации про товар
+      description: Изменение информации про товар
+      parameters:
+        - name: product_id
+          in: path
+          description: Идентификатор товара
+          type: integer
+          required: True
+        - name: product
+          in: body
+          description: Необходимо изменить
+          required: True
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Название
+              description:
+                type: string
+                description: Описание
+              category_id:
+                type: number
+                description: Идентификатор категории
+      responses:
+        200:
+          description: Успешно
+          schema:
+            properties:
+              id:
+                type: integer
+              category_id:
+                type: integer
+              name:
+                type: string
+              description:
+                type: string
+        404:
+          description: Не найден товар
+
+    delete:
+      tags:
+        - Products
+      summary: Удаление товара по его идентификатору
+      description: Удаление товара по его идентификатору
+      parameters:
+        - name: product_id
+          in: path
+          description: Идентификатор товара
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Товар успешно удален
+          schema:
+            properties:
+              id:
+                type: integer
+              category_id:
+                type: integer
+              name:
+                type: string
+              description:
+                type: string
+        404:
+          description: Необходимый товар не найден
+
+
+
+
+  /products/<query>:
+
+    get:
+      tags:
+        - Products
+      summary: что-то там
+      description: что-то там
+      parameters:
+        - name: name
+          in: query
+          description: имя
+          required: False
+        - name: description
+          in: query
+          description: описание
+          required: False
+        - name: category_id
+          in: query
+          description: ид категории
+          required: False
+      responses:
+        200:
+          description: Successfully read locations list operation
+          schema:
+            type: array
+            items:
+              products:
+                id:
+                  type: integer
+                category_id:
+                  type: integer
+                name:
+                  type: string
+                description:
+                  type: string
+
+  /products:
+
+    get:
+      tags:
+        - Products
+      summary: что-то там
+      description: что-то там
+      responses:
+        200:
+          description: Successfully read locations list operation
+          schema:
+            type: array
+            items:
+              products:
+                id:
+                  type: integer
+                category_id:
+                  type: integer
+                name:
+                  type: string
+                description:
+                  type: string
+
+
+    post:
+      tags:
+        - Products
+      summary: Добавление продукта в список продуктов
+      description: Добавление продукта в список продуктов
+      parameters:
+        - name: product
+          in: body
+          description: Добавляемый продукт
+          required: True
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Название
+              description:
+                type: string
+                description: Описание
+              category_id:
+                type: number
+                description: Идентификатор категории
+      responses:
+        201:
+          description: Товар успешно добавлен
